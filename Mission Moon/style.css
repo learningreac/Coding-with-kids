@@ -1,0 +1,97 @@
+body {
+	/* background-image: url('assets/space.png'); */
+	background-color: black;
+	overflow: hidden;
+}
+
+#earth {
+	float:left;
+	margin-top: 32%;
+	width: 20%;
+
+	animation-name: rotate;
+	animation-duration: 120s;
+	animation-iteration-count: infinite;
+	animation-timing-function: liner;
+	position: relative;
+	z-index: 1;
+}
+
+#moon {
+	float: right;
+	width: 15%;
+	margin-top: 3%;
+	
+	animation-name: rotate;
+	animation-duration: 120s;
+	animation-iteration-count: infinite;
+	animation-timing-function: liner;
+	position: relative;
+	z-index: 1;
+}
+
+#rocket {
+	width:3%;
+	position: absolute;
+	left: 9%;
+	margin-top: 28%;
+
+	animation-name: blastoff;
+	animation-duration: 15s;
+	animation-delay:2s;
+	animation-iteration-count: infinite;
+	z-index: 2;
+}
+
+@keyframes blastoff {
+	10% {margin-top: 3%}
+	20% {transform: rotate(45deg)}
+	60% {margin-left: 78%; margin-top: 4%}
+	70% {width:6%}
+	80% {transform:rotate(-90deg);}
+}
+
+@keyframes rotate {
+	100% {transform: rotate(360deg)}
+}
+
+#smoke {
+	position: absolute;
+	height:2rem;
+	width: 2rem;
+	background-color: grey;
+	border-radius: 25px;
+	margin-left: 8%;
+	margin-top: 32%;
+}
+
+.star1 {
+	position: absolute;
+	height: 0.2rem;
+	width: 0.2rem;
+	border-radius: 0.5rem;
+
+	animation-name: fadeIn;
+	animation-duration: 10s;
+	animation-iteration-count: infinite;
+}
+
+
+.star2 {
+	position: absolute;
+	height: 0.2rem;
+	width: 0.2rem;
+	border-radius: 0.5rem;
+
+	animation-name: fadeIn;
+	animation-duration: 10s;
+	animation-iteration-count: infinite;
+	animation-delay: 5s;
+
+}
+
+@keyframes fadeIn {
+	0% {opacity: 20%;}
+	50% {opacity: 100%;}
+	100% {opacity: 20%;}
+}
