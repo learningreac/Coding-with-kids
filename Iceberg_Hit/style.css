@@ -2,3 +2,12 @@ body {
     overflow: hidden;
     /* background-color: black; */
 }
+
+#boat {
+    position: absolute;
+    width: 8%;
+    height: 8%;
+    top: 50%;
+    left: 90%;
+    background-color: brown;
+}
