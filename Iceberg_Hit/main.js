@@ -3,7 +3,7 @@
 const iceContainer = document.querySelector("#icebergs");
 let screenHeight = document.body.clientHeight
 let screenWidth = document.body.clientWidth;
-const startX = -50;
+
 const col = 12, row = 8;
 // if transfer into px, it will be easier to attect the colosion by x and y
 // now will generate the size of the iceberg by screen width and height
@@ -12,6 +12,8 @@ const col = 12, row = 8;
 let icebergSize = screenHeight < screenWidth ? screenHeight / row : screenHeight / col;
 icebergSize = Math.floor(icebergSize); // px
 
+const startX = screenWidth * .6;
+const restartX = -icebergSize*10;
 console.log('windowSize', screenWidth, screenHeight, icebergSize);
 
 // boat keyboard events
@@ -50,7 +52,9 @@ function handleKeyUp(event) {
   console.log('keyup', event.code)
 }
 
-
+const  getRandomInt = (max) => {
+  return Math.floor(Math.random() * max);
+}
 
 
 
@@ -75,42 +79,49 @@ const animateOneIceberg = (iceberg) => {
 
   // console.log('js worked', 'curleft', curLeft)
 
-  if (curLeft > 100) {
-    curLeft = startX;
+  if (curLeft > screenWidth) {
+    curLeft = restartX;
     // top not change 
   }
 
-  curLeft += 1;
-  iceberg.style.left = curLeft + "%";
+  curLeft += 2;
+  iceberg.style.left = curLeft + "px";
   // console.log('new left', iceberg.style.left)
 }
 
 const generateOneColIcebers = (containerDiv, colId, total, left) => {
-
+// now total is equal row number, 
+// control if draw iceberg on that grid by random (0,1);
   let top = getRandomArbitrary(-3, 10);
 
   for (let i = 0; i < total; i++) {
-    let curIceberg = generateIceberg();
-    curIceberg.setAttribute('id', `${colId}-${i}`);
-    curIceberg.style.top = top + "%";
-    curIceberg.style.left = left + "%"
-    top += 25;
-    containerDiv.appendChild(curIceberg);
+    // random o 1
+    let flag = getRandomInt(3);
+    if(flag !== 0) {
+      top += icebergSize + icebergSize/5;
+    } else {
+      let curIceberg = generateIceberg();
+      curIceberg.setAttribute('id', `${colId}-${i}`);
+      curIceberg.style.top = top + "px";
+      curIceberg.style.left = left + "px"
+      top = top + icebergSize + icebergSize ;
+      containerDiv.appendChild(curIceberg);
+    }
+
+   
   }
 }
 
-const generateMultiCols = (cols) => {
-  let totalPerCol = [3, 4, 5];
+const generateMultiCols = (cols, row) => {
   let left = startX;
 
   for (let j = 0; j < cols; j++) {
     let colContainer = document.createElement('div');
-    colContainer.style.left = left + "%"
+    colContainer.style.left = left + "px"
     colContainer.setAttribute("id", `col${j}`);
-    let curTotal = totalPerCol[Math.floor(Math.random() * totalPerCol.length)];
-    generateOneColIcebers(colContainer, j, curTotal, left);
+    generateOneColIcebers(colContainer, j, row, left);
     iceContainer.appendChild(colContainer);
-    left += 25
+    left = left - icebergSize - icebergSize/2
   }
 };
 
@@ -138,5 +149,5 @@ const attectCollision = () => {
 }
 screenWidth > screenHeight ? generateMultiCols(col, row): generateMultiCols(row, col)
 
-// animateAllIcebers();
-// setInterval(animateAllIcebers, 200);
+animateAllIcebers();
+setInterval(animateAllIcebers, 20);
