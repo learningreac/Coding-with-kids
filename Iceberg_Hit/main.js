@@ -136,7 +136,7 @@ const attectCollision = () => {
 
 
 }
-col > row ? generateMultiCols(col): generateMultiCols(row)
+screenWidth > screenHeight ? generateMultiCols(col, row): generateMultiCols(row, col)
 
 // animateAllIcebers();
 // setInterval(animateAllIcebers, 200);

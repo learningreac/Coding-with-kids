@@ -1,5 +1,6 @@
-body {
+html, body {
     overflow: hidden;
+    position: relative;
     width: 100%;
     height: 100vh;
     background: #00BEA6 -webkit-gradient(linear, left top, left bottom, from(#2ed5ff), to(#00546a));
@@ -12,4 +13,9 @@ body {
     left: 90%;
     top:50%;
     background-color: brown;
+}
+
+#icebergs {
+    overflow: hidden;
+    height: 100vh;
 }
