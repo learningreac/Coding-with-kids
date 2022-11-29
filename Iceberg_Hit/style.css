@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     overflow: hidden;
     position: relative;
     width: 100%;
@@ -6,16 +7,38 @@ html, body {
     background: #00BEA6 -webkit-gradient(linear, left top, left bottom, from(#2ed5ff), to(#00546a));
 
     box-sizing: border-box;
+    margin: 0;
 }
 
 #boat {
     position: absolute;
-    left: 90%;
-    top:50%;
     background-color: brown;
 }
 
 #icebergs {
     overflow: hidden;
     height: 100vh;
+}
+
+#collision-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#collision-view p {
+    font-size:10rem;
+    color: white;
+}
+
+#collision-view.hidden {
+    /* display: none; */
 }

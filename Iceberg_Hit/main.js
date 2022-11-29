@@ -13,7 +13,7 @@ let icebergSize = screenHeight < screenWidth ? screenHeight / row : screenHeight
 icebergSize = Math.floor(icebergSize); // px
 
 const startX = screenWidth * .6;
-const restartX = -icebergSize*10;
+const restartX = -icebergSize * 10;
 console.log('windowSize', screenWidth, screenHeight, icebergSize);
 
 // boat keyboard events
@@ -24,7 +24,9 @@ document.addEventListener('keyup', handleKeyUp);
 const setBoat = () => {
   boat.style.width = icebergSize + "px";
   boat.style.height = icebergSize / 2 + "px";
-  boat.style.borderRadius =  `${icebergSize / 13}px`;
+  boat.style.borderRadius = `${icebergSize / 13}px`;
+  boat.style.top = "50%";
+  boat.style.left = "90%";
 }
 
 setBoat();
@@ -39,7 +41,7 @@ function handleKeydown(event) {
   let curY = parseInt(boat.style.top);
   if (event.keyCode === 40) { // Arrow down
     curY += 1;
-    console.log('down', event.code)
+    // console.log('down', event.code)
     boat.style.top = curY + "%"
   } else if (event.keyCode === 38) { // Arrow up
     curY -= 1;
@@ -52,7 +54,7 @@ function handleKeyUp(event) {
   console.log('keyup', event.code)
 }
 
-const  getRandomInt = (max) => {
+const getRandomInt = (max) => {
   return Math.floor(Math.random() * max);
 }
 
@@ -90,25 +92,25 @@ const animateOneIceberg = (iceberg) => {
 }
 
 const generateOneColIcebers = (containerDiv, colId, total, left) => {
-// now total is equal row number, 
-// control if draw iceberg on that grid by random (0,1);
+  // now total is equal row number, 
+  // control if draw iceberg on that grid by random (0,1);
   let top = getRandomArbitrary(-3, 10);
 
   for (let i = 0; i < total; i++) {
     // random o 1
     let flag = getRandomInt(3);
-    if(flag !== 0) {
-      top += icebergSize + icebergSize/5;
+    if (flag !== 0) {
+      top += icebergSize + icebergSize / 5;
     } else {
       let curIceberg = generateIceberg();
       curIceberg.setAttribute('id', `${colId}-${i}`);
       curIceberg.style.top = top + "px";
       curIceberg.style.left = left + "px"
-      top = top + icebergSize + icebergSize ;
+      top = top + icebergSize + icebergSize;
       containerDiv.appendChild(curIceberg);
     }
 
-   
+
   }
 }
 
@@ -121,33 +123,59 @@ const generateMultiCols = (cols, row) => {
     colContainer.setAttribute("id", `col${j}`);
     generateOneColIcebers(colContainer, j, row, left);
     iceContainer.appendChild(colContainer);
-    left = left - icebergSize - icebergSize/2
+    left = left - icebergSize - icebergSize / 2
   }
 };
 
 const animateAllIcebers = () => {
-  console.log('animation')
+  // console.log('animation')
   const cols = iceContainer.childNodes;
 
   for (const node of cols) {
     const divs = node.childNodes;
-    const curColLeft = parseInt(node.style.left);
-    console.log('check', curColLeft);
+    // const curColLeft = parseInt(node.style.left);
+    // console.log('check', curColLeft);
     for (const iceberg of divs) {
       animateOneIceberg(iceberg);
+      isCollision(iceberg, boat);
       // iceberg.style.backgroundColor = "yellow"
     }
   }
 }
 
+const isCollision = (iceberg, boat) => {
+  //  if the right of the iceberg is bigger than the left of the boat, then check top
+  const left = parseInt(iceberg.style.left);
+  const right = left + icebergSize;
+  const top = parseInt(iceberg.style.top);
+  const bottom = top + icebergSize;
 
-const attectCollision = () => {
-  //  the boat is at the right side, get the col div x;
-  // check if fall within boat area, if yes, check each iceberg div
+  const boatPosLeft = parseInt(boat.style.left)/100 * screenWidth;
+  const boatPosTop = parseInt(boat.style.top)/100 * screenHeight;
+  const boatPosBottom = boatPosTop + icebergSize / 2;
 
+  // console.log('boat', boatPosLeft, boatPosTop, boatPosBottom);
+  // console.log('COLLISION', right, top, bottom)
+  let result = false
+
+  // check collision
+  if (right + 1 >= boatPosLeft) {
+    // check top
+    if (boatPosTop >= top && boatPosTop <= bottom) {
+      console.log('collision')
+      result = true; // collision
+    } else if (boatPosBottom >= top && boatPosBottom <= bottom) {
+      result = true;
+      console.log('collision')
+    }
+  }
+
+  
+
+  return result;
 
 }
-screenWidth > screenHeight ? generateMultiCols(col, row): generateMultiCols(row, col)
+screenWidth > screenHeight ? generateMultiCols(col, row) : generateMultiCols(row, col)
 
-animateAllIcebers();
-setInterval(animateAllIcebers, 20);
+// animateAllIcebers();
+// setInterval(animateAllIcebers, 30);
