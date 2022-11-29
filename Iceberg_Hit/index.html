@@ -1,23 +1,32 @@
 <!DOCTYPE>
-    <html lang="en">
+<html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="main.js" defer> </script>
-        <title> Iceberg Hit</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="main.js" defer> </script>
+    <title> Iceberg Hit</title>
+</head>
 
-    <body>
+<body>
+    <div id="game-view">
         <div id="icebergs"></div>
         <div id="boat"></div>
-        <div id="collision-view" class="hidden">
-            <p id="collision-msg">Collision!!!</p>
-        </div>
+    </div>
+
+    <div id="collision-view" class="hidden">
+        <p id="collision-msg">Collision!!!</p>
+        <button id="restart-btn"> Try Again! </button>
+    </div>
+
+    <div id="countdown-view" class="hidden">
+        <button id="start-btn"> Click to Start! </button>
+        <p id="countdown-text">3</p>
+    </div>
 
 
 
-    </body>
+</body>
 
-    </html>
+</html>

@@ -10,6 +10,26 @@ body {
     margin: 0;
 }
 
+button {
+    border: none;
+    border-radius: 12px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    letter-spacing: .2rem;
+}
+
+#game-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+}
+
 #boat {
     position: absolute;
     background-color: brown;
@@ -18,6 +38,10 @@ body {
 #icebergs {
     overflow: hidden;
     height: 100vh;
+}
+
+#countdown-view.hidden{
+    display: none;
 }
 
 #collision-view {
@@ -29,16 +53,26 @@ body {
 
     background-color: rgba(0, 0, 0, 0.9);
     z-index: 2;
-    display:flex;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 #collision-view p {
-    font-size:10rem;
+    font-size: 10rem;
     color: white;
 }
 
-#collision-view.hidden {
-    /* display: none; */
+#restart-btn {
+    background-color: #008CBA;
 }
+#restart-btn:hover {
+    background-color: white;
+    color: #008CBA;
+}
+
+#collision-view.hidden {
+    display: none;
+}
+
