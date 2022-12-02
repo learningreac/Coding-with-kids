@@ -25,7 +25,7 @@ restartBtn.addEventListener('click', handRestart);
 
 
 const startX = screenWidth * .6;
-const restartX = -icebergSize * 10;
+const restartX = -icebergSize * 5;
 console.log('windowSize', screenWidth, screenHeight, icebergSize);
 
 // helper functions
@@ -41,7 +41,6 @@ const getRandomArbitrary = (min, max) => {
 // start boat keyboard events
 const boat = document.querySelector("#boat")
 document.addEventListener('keydown', handleKeydown);
-// document.addEventListener('keyup', handleKeyUp);
 
 const setBoat = () => {
   boat.style.width = icebergSize + "px";
@@ -54,7 +53,6 @@ const setBoat = () => {
 setBoat();
 
 function handleKeydown(event) {
-  console.log('keydown', boat.style.left)
 
   if (boat.style.top === "") {
     boat.style.top = "50%"
@@ -80,12 +78,6 @@ function handleKeydown(event) {
   }
 }
 
-// function handleKeyUp(event) {
-//   console.log('keyup', event.code)
-// }
-
-
-
 
 
 function handleStartBtnClick(event) {
@@ -104,12 +96,14 @@ function handleStartBtnClick(event) {
 }
 
 
-function handRestart (event) {
+function handRestart(event) {
   collisionView.classList.add('hidden');
   // remove all the child nodes from the iceberg container
-  while(iceContainer.firstChild) {
+  while (iceContainer.firstChild) {
     iceContainer.removeChild(iceContainer.firstChild);
   }
+  boat.style.top = "50%";
+  boat.style.left = "90%";
   StartGame();
 }
 
@@ -118,11 +112,7 @@ const StartGame = () => {
   screenWidth > screenHeight ? generateMultiCols(col, row) : generateMultiCols(row, col)
   animateAllIcebers();
   intervalID = setInterval(animateAllIcebers, 30);
-  console.log('collision', isCollision)
 }
-
-
-
 
 // start iceberg related functions
 
@@ -182,7 +172,6 @@ const generateMultiCols = (cols, row) => {
 
 const animateAllIcebers = () => {
 
-  console.log('interval', intervalID)
   const cols = iceContainer.childNodes;
 
   for (const node of cols) {
@@ -214,21 +203,29 @@ const checkCollision = (iceberg, boat) => {
   const top = parseInt(iceberg.style.top);
   const bottom = top + icebergSize;
 
-  const boatPosLeft = parseInt(boat.style.left) / 100 * screenWidth;
-  const boatPosTop = parseInt(boat.style.top) / 100 * screenHeight;
-  const boatPosBottom = boatPosTop + icebergSize / 2;
+  const boatLeft = parseInt(boat.style.left) / 100 * screenWidth;
+  const boatRight = boatLeft + icebergSize;
+  const boatTop = parseInt(boat.style.top) / 100 * screenHeight;
+  const boatBottom = boatTop + icebergSize / 2;
 
   let result = false;
-  // check collision
-  if (right + 1 >= boatPosLeft) {
-    // check top
-    if (boatPosTop >= top && boatPosTop <= bottom) {
-      result = true; // collision
-    } else if (boatPosBottom >= top && boatPosBottom <= bottom) {
+
+  // check boat left
+  if (boatLeft >= left && boatLeft < right) {
+    if (boatTop > top && boatTop <= bottom) {
+      result = true;
+    } else if (boatBottom > top && boatBottom <= bottom) {
+      result = true;
+    }
+
+  } else if (boatRight >= left && boatRight <= right) {  // check boat right
+    if (boatTop > top && boatTop <= bottom) {
+      result = true;
+    } else if (boatBottom > top && boatBottom <= bottom) {
       result = true;
     }
   }
-
+  
   return result;
 
 }
