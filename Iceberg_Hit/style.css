@@ -15,12 +15,14 @@ button {
     border-radius: 12px;
     color: white;
     padding: 15px 32px;
+    cursor: pointer;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 24px;
     letter-spacing: .2rem;
 }
+
 
 #game-view {
     position: absolute;
@@ -40,23 +42,61 @@ button {
     height: 100vh;
 }
 
-#countdown-view.hidden{
+
+/* #countdown-view {
+
+} */
+
+#countdown-view.hidden {
     display: none;
 }
 
-#collision-view {
+#countdown-text {
+    font-size: 15rem;
+}
+
+#collision-view,
+#countdown-view {
     position: absolute;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100%;
-
     background-color: rgba(0, 0, 0, 0.9);
     z-index: 2;
+    color: white;
+}
+
+#collision-view {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#start-btn {
+    position: absolute;
+    top: 50%;
+    left:50%;
+
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%); 
+     /* move the btn in the middle */
+}
+
+#countdown-text {
+    position: absolute;
+    left:50%;
+    transform: translate(-50%, -20%);
+
+}
+#start-btn,
+#restart-btn {
+    background-color: #008CBA;
+}
+
+#start-btn.hidden {
+    display: none;
 }
 
 #collision-view p {
@@ -64,9 +104,8 @@ button {
     color: white;
 }
 
-#restart-btn {
-    background-color: #008CBA;
-}
+
+#start-btn:hover,
 #restart-btn:hover {
     background-color: white;
     color: #008CBA;
@@ -75,4 +114,3 @@ button {
 #collision-view.hidden {
     display: none;
 }
-
