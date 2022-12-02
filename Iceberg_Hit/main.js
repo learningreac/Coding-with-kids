@@ -17,7 +17,12 @@ icebergSize = Math.floor(icebergSize); // px
 const countdownView = document.querySelector("#countdown-view");
 const collisionView = document.querySelector("#collision-view");
 
-console.log('views', countdownView, collisionView)
+// btn click events
+const startBtn = document.querySelector("#start-btn");
+const restartBtn = document.querySelector("#restart-btn");
+startBtn.addEventListener('click', handleStartBtnClick);
+restartBtn.addEventListener('click', handRestart);
+
 
 const startX = screenWidth * .6;
 const restartX = -icebergSize * 10;
@@ -80,9 +85,7 @@ function handleKeydown(event) {
 // }
 
 
-// start btn click events
-const startBtn = document.querySelector("#start-btn");
-startBtn.addEventListener('click', handleStartBtnClick);
+
 
 
 function handleStartBtnClick(event) {
@@ -101,8 +104,18 @@ function handleStartBtnClick(event) {
 }
 
 
+function handRestart (event) {
+  collisionView.classList.add('hidden');
+  // remove all the child nodes from the iceberg container
+  while(iceContainer.firstChild) {
+    iceContainer.removeChild(iceContainer.firstChild);
+  }
+  StartGame();
+}
+
 const StartGame = () => {
   isCollision = false;
+  screenWidth > screenHeight ? generateMultiCols(col, row) : generateMultiCols(row, col)
   animateAllIcebers();
   intervalID = setInterval(animateAllIcebers, 30);
   console.log('collision', isCollision)
@@ -151,8 +164,6 @@ const generateOneColIcebers = (containerDiv, colId, total, left) => {
       top = top + icebergSize + icebergSize;
       containerDiv.appendChild(curIceberg);
     }
-
-
   }
 }
 
@@ -178,7 +189,7 @@ const animateAllIcebers = () => {
     const divs = node.childNodes;
     for (const iceberg of divs) {
       animateOneIceberg(iceberg);
-      if(checkCollision(iceberg, boat)) {
+      if (checkCollision(iceberg, boat)) {
         isCollision = true;
         afterCollision();
         return;
@@ -189,7 +200,7 @@ const animateAllIcebers = () => {
 
 const afterCollision = () => {
   console.log('after', isCollision)
-  if(isCollision) {
+  if (isCollision) {
     window.clearInterval(intervalID);
     collisionView.classList.remove('hidden');
 
@@ -221,5 +232,4 @@ const checkCollision = (iceberg, boat) => {
   return result;
 
 }
-screenWidth > screenHeight ? generateMultiCols(col, row) : generateMultiCols(row, col)
 
